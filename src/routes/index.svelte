@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { browser } from '$app/env';
+	import Nations from '$lib/components/page/Nations.svelte';
 
 	import Loader from '$lib/components/utils/Loader.svelte';
 	import { NATION_ID } from '$lib/stores';
 	import { onMount } from 'svelte';
 	let value = '';
 	let isLoading = true;
+	let nations = [];
 	$: {
 		if ($NATION_ID && $NATION_ID != 'none') {
 			fetchNation($NATION_ID);
@@ -18,6 +20,7 @@
 				.then((res) => res.json())
 				.then((res) => {
 					console.log({ res });
+					nations = [...res.data];
 					isLoading = false;
 				});
 		}
@@ -48,7 +51,7 @@
 			Gathering Intel...
 		</div>
 	{:else}
-		<!-- else content here -->
+		<Nations {nations} />
 	{/if}
 {:else}
 	<div class="keyEntry">

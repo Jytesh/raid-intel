@@ -14,6 +14,6 @@
 <style lang="scss">
 	.body {
 		display: grid;
-		grid-template-columns: 10vw 1fr 10vw;
+		grid-template-columns: 5vw 1fr 5vw;
 	}
 </style>

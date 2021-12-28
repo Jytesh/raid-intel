@@ -1,9 +1,9 @@
 <script>
 </script>
 
-<navbar>
+<nav>
 	<a sveltekit:prefetch href="/">Raider Intel</a>
-	<a sveltekit:prefetch href="/about">About</a>
+	<div />
 	<div class="end">
 		<a class="githubIcon" sveltekit:prefetch href="/contact">
 			<svg aria-hidden="true" focusable="false" tabindex="-1" viewBox="0 0 24 24"
@@ -15,16 +15,17 @@
 			>
 		</a>
 	</div>
-</navbar>
+</nav>
 
 <style lang="scss">
-	navbar {
+	nav {
 		padding: 1vh 2vw;
 		font-size: 32px;
 		display: grid;
 		background-color: #1a1a1a;
 		grid-template-columns: 0.8fr 0.8fr 2.2fr;
 		box-shadow: 2px 2px 10px #3660b313;
+		margin-bottom: 2vh;
 	}
   .end {
     display: flex;
