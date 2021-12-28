@@ -1,0 +1,15 @@
+overwrite: true
+schema: './src/lib/gql/schema.graphql'
+documents: ['./src/lib/gql/queries/**.graphql']
+generates:
+  ./src/lib/gql/index.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-graphql-request'
+  ./src/lib/gql/graphql.schema.json:
+    plugins:
+      - 'introspection'
+config:
+  gqlImport: 'graphql-request#gql'
+  useTypeImports: true

@@ -1,0 +1,602 @@
+"""
+Schema For https://api.politicsandwar.com/graphql
+"""
+type Alliance {
+  acceptmem: Boolean
+  acronym: String
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  aluminum: Float
+
+  """
+  All bank transactions within the last 14 days, this field will return null unless you are in this alliance and have access to view its bank
+  """
+  bankrecs: [Bankrec]
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  bauxite: Float
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  coal: Float
+  color: String
+  flag: String
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  food: Float
+  forumlink: String
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  gasoline: Float
+  id: ID
+  irclink: String
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  iron: Float
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  lead: Float
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  money: Float
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  munitions: Float
+  name: String
+  nations: [Nation!]!
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  oil: Float
+  received_treaties: [Treaty!]!
+  score: Float
+  sent_treaties: [Treaty!]!
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  steel: Float
+
+  """
+  All tax records within the last 14 days, this field will return null unless you are in this alliance and have access to view its bank
+  """
+  taxrecs: [Bankrec]
+
+  """
+  This field will return null unless you are in this alliance and have access to view its bank
+  """
+  uranium: Float
+}
+
+"""A paginated list of Alliance items."""
+type AlliancePaginator {
+  """A list of Alliance items."""
+  data: [Alliance!]!
+
+  """Pagination information about the list of items."""
+  paginatorInfo: PaginatorInfo!
+}
+
+enum AlliancePosition {
+  APPLICANT
+  HEIR
+  LEADER
+  MEMBER
+  NOALLIANCE
+  OFFICER
+}
+
+enum AttackType {
+  AIRVAIR
+  AIRVINFRA
+  AIRVMONEY
+  AIRVSHIPS
+  AIRVSOLDIERS
+  AIRVTANKS
+  ALLIANCELOOT
+  FORTIFY
+  GROUND
+  MISSILE
+  MISSILEFAIL
+  NAVAL
+  NUKE
+  NUKEFAIL
+  PEACE
+  VICTORY
+}
+
+type Bankrec {
+  aluminum: Float
+  bauxite: Float
+  coal: Float
+  date: DateTime
+  food: Float
+  gasoline: Float
+  id: ID
+  iron: Float
+  lead: Float
+  money: Float
+  munitions: Float
+  note: String
+  oil: Float
+
+  """ID of the Banking Nation"""
+  pid: ID
+  rid: ID
+  rtype: Int
+  sid: ID
+  steel: Float
+  stype: Int
+  tax_id: ID
+  uranium: Float
+}
+
+type City {
+  airforcebase: Int
+  aluminumrefinery: Int
+  bank: Int
+  barracks: Int
+  bauxitemine: Int
+  coalmine: Int
+  coalpower: Int
+  date: Date
+  drydock: Int
+  factory: Int
+  farm: Int
+  gasrefinery: Int
+  hospital: Int
+  id: ID
+  infrastructure: Float
+  ironmine: Int
+  land: Float
+  leadmine: Int
+  mall: Int
+  munitionsfactory: Int
+  name: String
+  nuclearpower: Int
+  oilpower: Int
+  oilwell: Int
+  policestation: Int
+  powered: Boolean
+  recyclingcenter: Int
+  stadium: Int
+  steelmill: Int
+  subway: Int
+  supermarket: Int
+  uramine: Int
+  windpower: Int
+}
+
+type Color {
+  bloc_name: String
+  color: String
+  turn_bonus: Int
+}
+
+"""A date string with format `Y-m-d`, e.g. `2011-05-23`."""
+scalar Date
+
+"""
+A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`.
+"""
+scalar DateTime
+
+"""
+A datetime and timezone string in ISO 8601 format `Y-m-dTH:i:sO`, e.g. `2020-04-20T13:53:12+02:00`.
+"""
+scalar DateTimeTz
+
+type Nation {
+  adv_city_planning: Boolean
+  adv_engineering_corps: Boolean
+  aircraft: Int
+  alliance: Alliance
+  alliance_id: ID
+  alliance_position: AlliancePosition
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  aluminum: Float
+  arable_land_agency: Boolean
+  armss: Boolean
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  bauxite: Float
+  bauxitew: Boolean
+  beigeturns: Int
+  cfce: Boolean
+  cia: Boolean
+  cities: [City!]!
+  city_planning: Boolean
+  clinical_research_center: Boolean
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  coal: Float
+  color: String
+  continent: String
+  date: DateTime
+
+  """All defensive wars within the last 14 days"""
+  defensive_wars: [War!]!
+  dompolicy: String
+  egr: Boolean
+  espionage_available: Boolean
+  flag: String
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  food: Float
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  gasoline: Float
+  green_tech: Boolean
+  id: ID
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  iron: Float
+  irond: Boolean
+  ironw: Boolean
+  itc: Boolean
+  last_active: DateTime
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  lead: Float
+  leader_name: String
+  massirr: Boolean
+  missiles: Int
+  mlp: Boolean
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  money: Float
+  moon_landing: Boolean
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  munitions: Float
+  nation_name: String
+  nrf: Boolean
+  nukes: Int
+  num_cities: Int
+
+  """All offensive wars within the last 14 days"""
+  offensive_wars: [War!]!
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  oil: Float
+  pirate_economy: Boolean
+  population: Int
+  projects: Int
+  propb: Boolean
+
+  """All received bank transactions within the last 14 days"""
+  received_bankrecs: [Bankrec!]!
+  recycling_initiative: Boolean
+  score: Float
+
+  """All sent bank transactions within the last 14 days"""
+  sent_bankrecs: [Bankrec!]!
+  ships: Int
+  soldiers: Int
+  space_program: Boolean
+  specialized_police_training: Boolean
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  spies: Int
+  spy_satellite: Boolean
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  steel: Float
+  tanks: Int
+  telecom_satellite: Boolean
+  treasures: [Treasure!]!
+  uap: Boolean
+
+  """
+  This field will return null unless you are an officer or higher in the same alliance as this nation, and this nation allows alliance bank access
+  """
+  uranium: Float
+  vds: Boolean
+  vmode: Int
+  warpolicy: String
+}
+
+"""A paginated list of Nation items."""
+type NationPaginator {
+  """A list of Nation items."""
+  data: [Nation!]!
+
+  """Pagination information about the list of items."""
+  paginatorInfo: PaginatorInfo!
+}
+
+"""Pagination information about the corresponding list of items."""
+type PageInfo {
+  """Count of nodes in current request."""
+  count: Int
+
+  """Current page of request."""
+  currentPage: Int
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """Last page in connection."""
+  lastPage: Int
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """Total number of node in connection."""
+  total: Int
+}
+
+"""Pagination information about the corresponding list of items."""
+type PaginatorInfo {
+  """Total count of available items in the page."""
+  count: Int!
+
+  """Current pagination page."""
+  currentPage: Int!
+
+  """Index of first item in the current page."""
+  firstItem: Int
+
+  """If collection has more pages."""
+  hasMorePages: Boolean!
+
+  """Index of last item in the current page."""
+  lastItem: Int
+
+  """Last page number of the collection."""
+  lastPage: Int!
+
+  """Number of items per page in the collection."""
+  perPage: Int!
+
+  """Total items available in the collection."""
+  total: Int!
+}
+
+type Query {
+  alliances(
+    """Limits number of fetched elements. Maximum allowed value: 50."""
+    first: Int!
+    id: [Int]
+
+    """The offset from which elements are returned."""
+    page: Int
+  ): AlliancePaginator
+  colors: [Color]
+  nations(
+    alliance_id: [Int]
+    alliance_position: Int
+    cities: Int
+    color: String
+    created_after: Date
+
+    """Limits number of fetched elements. Maximum allowed value: 500."""
+    first: Int!
+    id: [Int]
+    leader_name: [String]
+    max_cities: Int
+    max_score: Float
+    min_cities: Int
+    min_score: Float
+    name: String
+    nation_name: [String]
+
+    """The offset from which elements are returned."""
+    page: Int
+    vmode: Boolean
+  ): NationPaginator
+  tradeprices(limit: Int = 30): [Tradeprice]
+  trades(accepted: Boolean, buy_or_sell: String, id: [Int], limit: Int = 1000, nation_id: [ID], offer_resource: String, type: TradeType): [Trade]
+  treasures: [Treasure]
+  wars(
+    """
+    By default, will return only active wars. Pass this as false to return all wars.
+    """
+    active: Boolean = true
+    alliance_id: [ID]
+
+    """
+    Max is 14 days ago. Set to 0 to disable time limit if you want to query by war IDs.
+    """
+    days_ago: Int = 1
+    id: [Int]
+    nation_id: [ID]
+  ): [War]
+}
+
+type Trade {
+  accepted: Boolean
+
+  """buy/sell"""
+  buy_or_sell: String
+  date: DateTime
+  date_accepted: DateTime
+  id: ID
+  offer_amount: Int
+  offer_resource: String
+  receiver: Nation
+
+  """ID of the Nation Buying"""
+  rid: ID
+  sender: Nation
+
+  """ID of the Nation Selling"""
+  sid: ID
+
+  """Total in $ for the Trade"""
+  total: Int
+  type: TradeType
+}
+
+enum TradeType {
+  ALLIANCE
+  GLOBAL
+  PERSONAL
+}
+
+type Tradeprice {
+  aluminum: Float
+  bauxite: Float
+  coal: Float
+  credits: Float
+  date: Date
+  food: Float
+  gasoline: Float
+  id: ID
+  iron: Float
+  lead: Float
+  munitions: Float
+  oil: Float
+  steel: Float
+  uranium: Float
+}
+
+type Treasure {
+  bonus: Int
+  color: String
+  continent: String
+  name: String
+  nation: Nation
+  spawndate: Date
+}
+
+type Treaty {
+  alliance1: Alliance
+  alliance2: Alliance
+  date: Date
+  id: ID
+  treaty_type: String
+  turns_left: Int
+}
+
+type War {
+  airsuperiority: ID
+  att_aircraft_killed: Int
+  att_alliance_id: ID
+  att_alum_used: Int
+  att_fortify: Boolean
+  att_gas_used: Float
+  att_infra_destroyed: Float
+  att_infra_destroyed_value: Float
+  att_missiles_used: Int
+  att_money_looted: Float
+  att_mun_used: Float
+  att_nukes_used: Int
+  att_resistance: Int
+  att_ships_killed: Int
+  att_soldiers_killed: Int
+  att_steel_used: Int
+  att_tanks_killed: Int
+  attacker: Nation
+  attacks: [WarAttack!]!
+  attid: ID
+  attpeace: Boolean
+  attpoints: Int
+  date: DateTime
+  def_aircraft_killed: Int
+  def_alliance_id: ID
+  def_alum_used: Int
+  def_fortify: Boolean
+  def_gas_used: Float
+  def_infra_destroyed: Float
+  def_infra_destroyed_value: Float
+  def_missiles_used: Int
+  def_money_looted: Float
+  def_mun_used: Float
+  def_nukes_used: Int
+  def_resistance: Int
+  def_ships_killed: Int
+  def_soldiers_killed: Int
+  def_steel_used: Int
+  def_tanks_killed: Int
+  defender: Nation
+  defid: ID
+  defpeace: Boolean
+  defpoints: Int
+  groundcontrol: ID
+  id: ID
+  navalblockade: ID
+  reason: String
+  turnsleft: Int
+  war_type: WarType
+  winner: ID
+}
+
+type WarAttack {
+  att_gas_used: Float
+  att_mun_used: Float
+  attcas1: Int
+  attcas2: Int
+  city_infra_before: Float
+  cityid: ID
+  date: DateTime
+  def_gas_used: Float
+  def_mun_used: Float
+  defcas1: Int
+  defcas2: Int
+  id: ID
+  improvementslost: Int
+  infra_destroyed_value: Float
+  infradestroyed: Float
+  loot_info: String
+  moneystolen: Float
+  resistance_eliminated: Int
+  success: Int
+  type: AttackType
+  victor: ID
+}
+
+enum WarType {
+  ATTRITION
+  ORDINARY
+  RAID
+}
