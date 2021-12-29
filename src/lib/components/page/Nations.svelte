@@ -35,6 +35,9 @@
 						<span>{nation.aircraft}</span>
 						<span>{nation.ships}</span>
 					</div>
+					<span>{nation.missiles}</span>
+					<span>{nation.nukes}</span>
+					<span>{nation.money}</span>
 				</div>
 			{/each}
 		</div>

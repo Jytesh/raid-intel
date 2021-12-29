@@ -29,6 +29,7 @@ query getNation($nationID: Int!) {
 			tanks
 			aircraft
 			ships
+			missiles
 			nukes
 		}
 	}

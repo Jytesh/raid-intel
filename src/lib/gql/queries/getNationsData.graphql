@@ -29,6 +29,7 @@ query getNationsData($min_score: Float!, $max_score: Float!) {
 			tanks
 			aircraft
 			ships
+			missiles
 			nukes
 		}
 	}

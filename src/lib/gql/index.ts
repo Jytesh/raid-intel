@@ -535,7 +535,7 @@ export type GetNationQueryVariables = Exact<{
 }>;
 
 
-export type GetNationQuery = { __typename?: 'Query', nations?: { __typename?: 'NationPaginator', data: Array<{ __typename?: 'Nation', id?: string | null | undefined, nation_name?: string | null | undefined, leader_name?: string | null | undefined, alliance_id?: string | null | undefined, score?: number | null | undefined, soldiers?: number | null | undefined, tanks?: number | null | undefined, aircraft?: number | null | undefined, ships?: number | null | undefined, nukes?: number | null | undefined, alliance?: { __typename?: 'Alliance', id?: string | null | undefined, sent_treaties: Array<{ __typename?: 'Treaty', alliance1?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined, alliance2?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined }>, received_treaties: Array<{ __typename?: 'Treaty', alliance1?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined, alliance2?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined }> } | null | undefined }> } | null | undefined };
+export type GetNationQuery = { __typename?: 'Query', nations?: { __typename?: 'NationPaginator', data: Array<{ __typename?: 'Nation', id?: string | null | undefined, nation_name?: string | null | undefined, leader_name?: string | null | undefined, alliance_id?: string | null | undefined, score?: number | null | undefined, soldiers?: number | null | undefined, tanks?: number | null | undefined, aircraft?: number | null | undefined, ships?: number | null | undefined, missiles?: number | null | undefined, nukes?: number | null | undefined, alliance?: { __typename?: 'Alliance', id?: string | null | undefined, sent_treaties: Array<{ __typename?: 'Treaty', alliance1?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined, alliance2?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined }>, received_treaties: Array<{ __typename?: 'Treaty', alliance1?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined, alliance2?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined }> } | null | undefined }> } | null | undefined };
 
 export type GetNationsDataQueryVariables = Exact<{
   min_score: Scalars['Float'];
@@ -543,7 +543,7 @@ export type GetNationsDataQueryVariables = Exact<{
 }>;
 
 
-export type GetNationsDataQuery = { __typename?: 'Query', nations?: { __typename?: 'NationPaginator', data: Array<{ __typename?: 'Nation', id?: string | null | undefined, nation_name?: string | null | undefined, leader_name?: string | null | undefined, alliance_id?: string | null | undefined, score?: number | null | undefined, soldiers?: number | null | undefined, tanks?: number | null | undefined, aircraft?: number | null | undefined, ships?: number | null | undefined, nukes?: number | null | undefined, alliance?: { __typename?: 'Alliance', id?: string | null | undefined, sent_treaties: Array<{ __typename?: 'Treaty', alliance1?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined, alliance2?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined }>, received_treaties: Array<{ __typename?: 'Treaty', alliance1?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined, alliance2?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined }> } | null | undefined }> } | null | undefined };
+export type GetNationsDataQuery = { __typename?: 'Query', nations?: { __typename?: 'NationPaginator', data: Array<{ __typename?: 'Nation', id?: string | null | undefined, nation_name?: string | null | undefined, leader_name?: string | null | undefined, alliance_id?: string | null | undefined, score?: number | null | undefined, soldiers?: number | null | undefined, tanks?: number | null | undefined, aircraft?: number | null | undefined, ships?: number | null | undefined, missiles?: number | null | undefined, nukes?: number | null | undefined, alliance?: { __typename?: 'Alliance', id?: string | null | undefined, sent_treaties: Array<{ __typename?: 'Treaty', alliance1?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined, alliance2?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined }>, received_treaties: Array<{ __typename?: 'Treaty', alliance1?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined, alliance2?: { __typename?: 'Alliance', id?: string | null | undefined } | null | undefined }> } | null | undefined }> } | null | undefined };
 
 
 export const GetNationDocument = gql`
@@ -578,6 +578,7 @@ export const GetNationDocument = gql`
       tanks
       aircraft
       ships
+      missiles
       nukes
     }
   }
@@ -615,6 +616,7 @@ export const GetNationsDataDocument = gql`
       tanks
       aircraft
       ships
+      missiles
       nukes
     }
   }
