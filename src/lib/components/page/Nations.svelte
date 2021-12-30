@@ -107,7 +107,7 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 		gap: 2px 4px;
-    & > {
+    & > * {
       overflow-x: scroll;
     }
 	}

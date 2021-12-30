@@ -1,5 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
-import { getSdk, GetNationQuery } from '$lib/gql';
+import { getSdk } from '$lib/gql';
+import type { GetNationQuery } from '$lib/gql';
 
 type Nation = GetNationQuery['nations']['data'][number];
 const apiClient = getSdk(
