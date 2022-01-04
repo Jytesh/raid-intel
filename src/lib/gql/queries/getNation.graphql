@@ -31,6 +31,22 @@ query getNation($nationID: Int!) {
 			ships
 			missiles
 			nukes
+			money
+			cities {
+				id
+			}
+			defensive_wars {
+				def_money_looted
+				attacker {
+					id
+				}
+				winner
+				attacks {
+					cityid
+					moneystolen
+					loot_info
+				}
+			}
 		}
 	}
 }
