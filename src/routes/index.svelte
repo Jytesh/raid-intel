@@ -1,15 +1,24 @@
 <script lang="ts">
 	import { browser } from '$app/env';
-	import type { Nation } from '$lib/utils/api';
-	import Nations from '$lib/components/page/Nations.svelte';
+	import { onMount } from 'svelte';
 
+	import Button, { Icon } from '@smui/button';
+	import Textfield from '@smui/textfield';
+	import Snackbar, { Actions, Label, SnackbarComponentDev } from '@smui/snackbar';
+	import IconButton from '@smui/icon-button';
+
+	import Nations from '$lib/components/page/Nations.svelte';
 	import Loader from '$lib/components/utils/Loader.svelte';
+
 	import { NATION_ID } from '$lib/stores';
 	import { processNation } from '$lib/utils';
-	import { onMount } from 'svelte';
+	import type { Nation } from '$lib/utils/api';
+
 	let value = '';
-	let isLoading = true;
+	let isLoading = true, isError = false;
 	let nations = [];
+	let warningBar: SnackbarComponentDev;
+
 	$: {
 		if ($NATION_ID && $NATION_ID != 'none') {
 			fetchNation($NATION_ID);
@@ -21,16 +30,28 @@
 			fetch(`/api/data.json?${params}`)
 				.then((res) => res.json())
 				.then((res) => {
-					console.log({ res });
-					nations = [...(res.data as Nation[])]
-						.map(processNation)
+					if (!res.data) {
+						localStorage.removeItem('nationID')
+						isError = true;
+						setTimeout(() => {
+							warningBar.open()
+						}, 100)
+						return
+					}
+					console.log({ res }, res.data)
+					nations = [...(res.data as Nation[])].map(processNation);
 					isLoading = false;
+				})
+				.catch((err) => {
+					isError = true;
+					localStorage.removeItem('nationID')
+					console.error({ err });
 				});
 		}
 	}
 	function storenationID(event) {
 		if (event.key === 'Enter') {
-			if (!value) return;
+			if (!value) return (isError = false && warningBar.open());
 			NATION_ID.update(() => value);
 			localStorage.setItem('nationID', value);
 			document.removeEventListener('keydown', storenationID);
@@ -47,7 +68,7 @@
 	});
 </script>
 
-{#if $NATION_ID}
+{#if $NATION_ID && !isError}
 	{#if isLoading}
 		<div class="center">
 			<Loader />
@@ -59,9 +80,20 @@
 {:else}
 	<div class="keyEntry">
 		<h1>Enter Your Nation ID</h1>
-		<input bind:value />
-		<button on:click={() => storenationID({ key: 'Enter' })}> Go </button>
+		<Textfield class="shapedFilled" variant="outlined" bind:value />
+		<Button on:click={() => storenationID({ key: 'Enter' })} variant="unelevated">
+			<Icon class="material-icons">arrow_forward</Icon>
+		</Button>
 	</div>
+	<Snackbar bind:this={warningBar} on:mount={() => {
+		console.log('mounted')
+		isError && warningBar.open()
+}}>
+		<Label>{isError ? 'Your Nation ID was invalid' : 'Enter a valid nation ID!'}</Label>
+		<Actions>
+			<IconButton class="material-icons" title="Dismiss">close</IconButton>
+		</Actions>
+	</Snackbar>
 {/if}
 
 <style lang="scss">
@@ -76,10 +108,19 @@
 		border-radius: 1em;
 		box-shadow: 0 0.5em 1em 0 rgba(51, 135, 184, 0.13);
 
-		button {
+		h1 {
+			margin-bottom: 1rem;
+		}
+		:global(button) {
 			margin: auto;
 			padding: 1vh 0.2vw;
 			width: 30%;
+		}
+		:global(.mdc-text-field) {
+			background-color: var(--form-element-background-color);
+		}
+		:global(input) {
+			--box-shadow: none !important;
 		}
 	}
 
