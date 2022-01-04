@@ -1,5 +1,14 @@
 <script>
 	export let nations;
+	$: {
+		console.log({ nations });
+		nations = [
+			...nations?.sort(
+				(a, b) => b.calculated_looted_money?.value - a.calculated_looted_money?.value,
+				0
+			)
+		];
+	}
 </script>
 
 <div class="top">
@@ -13,20 +22,20 @@
 			<span> Score </span>
 			<span> Badges </span>
 			<div class="army">
-        <span>Soldiers</span>
-        <span>Tanks</span>
-        <span>Air</span>
-        <span>Ship</span>
-      </div>
+				<span>Soldiers</span>
+				<span>Tanks</span>
+				<span>Air</span>
+				<span>Ship</span>
+			</div>
 			<span> Missile </span>
-			<span> Nuke </span>
+			<span> Nukes </span>
 			<span> Lootable Money </span>
 		</div>
 		<div class="scroll">
 			{#each nations as nation, index}
 				<div class="nation" class:darken={Boolean(index % 2)}>
 					<span>{index + 1}</span>
-					<span>{nation.nation_name}</span>
+					<span class="overflow">{nation.nation_name}</span>
 					<span>{nation.score}</span>
 					<span />
 					<div class="army">
@@ -37,7 +46,7 @@
 					</div>
 					<span>{nation.missiles}</span>
 					<span>{nation.nukes}</span>
-					<span>{nation.money}</span>
+					<span>${nation.calculated_looted_money?.string}</span>
 				</div>
 			{/each}
 		</div>
@@ -59,11 +68,11 @@
 	.nationsTable {
 		background-color: #2424242d;
 		margin: auto;
-    width: 80vw;
+		width: 80vw;
 	}
 	.scroll {
 		max-height: 70vh;
-		
+
 		overflow-y: scroll;
 		scrollbar-width: thin;
 	}
@@ -107,8 +116,13 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 		gap: 2px 4px;
-    & > * {
-      overflow-x: scroll;
-    }
+		& > * {
+			overflow-x: scroll;
+		}
+	}
+	.overflow {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 </style>

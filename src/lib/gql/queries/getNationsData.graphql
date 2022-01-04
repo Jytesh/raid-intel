@@ -31,22 +31,18 @@ query getNationsData($min_score: Float!, $max_score: Float!) {
 			ships
 			missiles
 			nukes
-			money
 			cities {
-			id
+				id
 			}
-      defensive_wars {
-        def_money_looted
-        attacker {
-          id
-        }
-        winner
-        attacks {
-          cityid
-          moneystolen
-          loot_info
-        }
-      }
+			defensive_wars {
+				date
+				winner
+				attacks {
+					cityid
+					moneystolen
+					loot_info
+				}
+			}
 		}
 	}
 }

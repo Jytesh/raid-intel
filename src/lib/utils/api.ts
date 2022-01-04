@@ -1,8 +1,16 @@
 import { GraphQLClient } from 'graphql-request';
 import { getSdk } from '$lib/gql';
 import type { GetNationsDataQuery } from '$lib/gql';
+import type { LootMethod } from '.';
 
-type Nation = GetNationsDataQuery['nations']['data'][number];
+type BaseNation = GetNationsDataQuery['nations']['data'][number];
+interface Nation extends BaseNation {
+	calculated_looted_money?: {
+		value: number;
+		string: string;
+		method: LootMethod
+	};
+}
 const apiClient = getSdk(
 	new GraphQLClient(`${process.env['API_URL']}?api_key=${process.env['API_KEY']}`)
 );
@@ -24,7 +32,7 @@ export async function getNations(nationID: string, friendlyAlliances: string[], 
 	let nations = cache.get(`${nationID}-nations`);
 	if (nations && Array.isArray(nations)) return nations;
 	// War Range
-	const min_score = score * 0.75;
+	const min_score = score * 1; // actually 0.75
 	const max_score = score * 1.5;
 
 	nations = (await apiClient.getNationsData({ min_score, max_score })).nations.data;

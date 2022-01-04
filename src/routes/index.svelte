@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { browser } from '$app/env';
+	import type { Nation } from '$lib/utils/api';
 	import Nations from '$lib/components/page/Nations.svelte';
 
 	import Loader from '$lib/components/utils/Loader.svelte';
 	import { NATION_ID } from '$lib/stores';
+	import { processNation } from '$lib/utils';
 	import { onMount } from 'svelte';
 	let value = '';
 	let isLoading = true;
@@ -20,7 +22,8 @@
 				.then((res) => res.json())
 				.then((res) => {
 					console.log({ res });
-					nations = [...res.data];
+					nations = [...(res.data as Nation[])]
+						.map(processNation)
 					isLoading = false;
 				});
 		}
