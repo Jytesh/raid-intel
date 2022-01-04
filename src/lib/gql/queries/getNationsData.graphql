@@ -1,5 +1,5 @@
-query getNationsData($min_score: Float!, $max_score: Float!) {
-	nations(first: 500, min_score: $min_score, max_score: $max_score) {
+query getNationsData($min_score: Float!, $max_score: Float!, $page: Int) {
+	nations(first: 100, min_score: $min_score, max_score: $max_score, page: $page) {
 		data {
 			id
 			nation_name
@@ -43,6 +43,10 @@ query getNationsData($min_score: Float!, $max_score: Float!) {
 					loot_info
 				}
 			}
+		}
+		paginatorInfo {
+			currentPage
+			hasMorePages
 		}
 	}
 }

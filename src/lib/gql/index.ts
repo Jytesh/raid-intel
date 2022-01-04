@@ -597,6 +597,7 @@ export type GetNationQuery = {
 export type GetNationsDataQueryVariables = Exact<{
 	min_score: Scalars['Float'];
 	max_score: Scalars['Float'];
+	page?: InputMaybe<Scalars['Int']>;
 }>;
 
 export type GetNationsDataQuery = {
@@ -659,6 +660,7 @@ export type GetNationsDataQuery = {
 						}>;
 					}>;
 				}>;
+				paginatorInfo: { __typename?: 'PaginatorInfo'; currentPage: number; hasMorePages: boolean };
 		  }
 		| null
 		| undefined;
@@ -715,8 +717,8 @@ export const GetNationDocument = gql`
 	}
 `;
 export const GetNationsDataDocument = gql`
-	query getNationsData($min_score: Float!, $max_score: Float!) {
-		nations(first: 500, min_score: $min_score, max_score: $max_score) {
+	query getNationsData($min_score: Float!, $max_score: Float!, $page: Int) {
+		nations(first: 100, min_score: $min_score, max_score: $max_score, page: $page) {
 			data {
 				id
 				nation_name
@@ -760,6 +762,10 @@ export const GetNationsDataDocument = gql`
 						loot_info
 					}
 				}
+			}
+			paginatorInfo {
+				currentPage
+				hasMorePages
 			}
 		}
 	}

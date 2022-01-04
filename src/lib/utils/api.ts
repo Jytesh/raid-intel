@@ -8,7 +8,7 @@ interface Nation extends BaseNation {
 	calculated_looted_money?: {
 		value: number;
 		string: string;
-		method: LootMethod
+		method: LootMethod;
 	};
 }
 const apiClient = getSdk(
@@ -28,15 +28,30 @@ export async function getNation(id: number): Promise<Nation> {
 	return nation;
 }
 
-export async function getNations(nationID: string, friendlyAlliances: string[], score: number): Promise<Nation[]> {
+export async function getNations(
+	nationID: string,
+	friendlyAlliances: string[],
+	score: number
+): Promise<Nation[]> {
 	let nations = cache.get(`${nationID}-nations`);
 	if (nations && Array.isArray(nations)) return nations;
 	// War Range
 	const min_score = score * 1; // actually 0.75
 	const max_score = score * 1.5;
 
-	nations = (await apiClient.getNationsData({ min_score, max_score })).nations.data;
-	nations.filter((x) => !friendlyAlliances.includes(x.alliance_id));
+	nations = [];
+	let cursor = 0;
+	for (let i = 0; i <= 5; i++) {
+		// Limit to 5 iterations
+		const data = (
+			await apiClient.getNationsData({ min_score, max_score, page: cursor })
+		)
+		const collected = data.nations.data.filter((x) => !friendlyAlliances.includes(x.alliance_id));
+		cursor = data.nations.paginatorInfo.currentPage + 1
+		nations.push(...collected);
+		if (!data.nations.paginatorInfo.hasMorePages) break;
+	}
+
 	cache.set(`${nationID}-nations`, nations);
 	return nations;
 }
