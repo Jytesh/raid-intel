@@ -1,8 +1,12 @@
 import { GraphQLClient } from 'graphql-request';
 import { getSdk } from '$lib/gql';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+
+import type { NormalizedCacheObject } from '@apollo/client';
 import type { GetNationsDataQuery } from '$lib/gql';
 import type { LootMethod } from '.';
 
+const apiCache: InMemoryCache = new InMemoryCache({});
 type BaseNation = GetNationsDataQuery['nations']['data'][number];
 interface Nation extends BaseNation {
 	calculated_looted_money?: {
@@ -11,6 +15,12 @@ interface Nation extends BaseNation {
 		method: LootMethod
 	};
 }
+
+
+const apolloClient = new ApolloClient<NormalizedCacheObject>({
+	cache: apiCache,
+	uri: `${process.env['API_URL']}?api_key=${process.env['API_KEY']}`
+})
 const apiClient = getSdk(
 	new GraphQLClient(`${process.env['API_URL']}?api_key=${process.env['API_KEY']}`)
 );
