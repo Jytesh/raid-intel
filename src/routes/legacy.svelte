@@ -1,43 +1,39 @@
 <script lang="ts">
 	import { browser } from '$app/env';
 
-	import Nations from '$lib/components/page/Nations.svelte';
+	import Nations from '$lib/components/page/NationsLegacy.svelte';
 	import Loader from '$lib/components/utils/Loader.svelte';
 
 	import { NATION_ID } from '$lib/stores';
+	import { processNation } from '$lib/utils';
 	import type { Nation } from '$lib/utils/api';
 	import { goto } from '$app/navigation';
 
 	let isLoading = true,
 		isError = false;
 	let nations = [];
-	if (browser) {
-    const nation = localStorage.getItem('nationID');
-    nation && NATION_ID.set(nation)
-  }
-	console.log({ $NATION_ID });
+
 	$: {
 		if ($NATION_ID && $NATION_ID != 'none') {
 			fetchNation($NATION_ID);
 		} else {
-			if (browser) goto('/signIn');
+			goto('/signIn');
 		}
 	}
 	function fetchNation(id: string) {
 		if (browser) {
 			const params = new URLSearchParams({ id });
-			fetch(`/api/blitz.json?${params}`)
+			fetch(`/api/data.json?${params}`)
 				.then((res) => res.json())
-				.then((res) => {-
-					console.log(res);
-					if (!res.data.length) {
+				.then((res) => {
+					if (!res.data) {
 						localStorage.removeItem('nationID');
 						isError = true;
 						goto('/signIn');
 						return;
 					}
 					console.log({ res }, res.data);
-					nations = [...(res.data as Nation[])];
+					nations = [...(res.data as Nation[])].map(processNation);
 					isLoading = false;
 				})
 				.catch((err) => {
